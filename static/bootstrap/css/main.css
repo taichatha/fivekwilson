@@ -1,0 +1,15 @@
+.title{
+	background-color: #66CC00;
+	text-align: center;
+}
+
+.contact p{
+
+	margin:0em;
+}
+
+.contact{
+	width: 200px;
+	border: 1px solid #c0c0c0;
+	margin: auto;
+}
