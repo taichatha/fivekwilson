@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <link href="{% static 'bootstrap/css/main.css' %}"
+          rel="stylesheet" media="screen">
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+    <title>{% block title %}5000 Wilson Blvd{% endblock %}</title>
+</head>
+
+<body>
+    <!-- <div id="navbar">
+      <ul class="nav nav-tabs">
+      {% url 'some_urlpattern_name' as url %}
+        <li role="presentation" {% if request.path == url %} class="active"{% endif %}><a href="{% url 'station:index'  %}">Home</a></li>
+        
+      </ul>        
+    </div> -->
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+</body>
+</html>

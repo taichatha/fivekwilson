@@ -6,7 +6,9 @@ from datetime import datetime
 
 # Create your models here.
 class Customer(models.Model):
-	user = models.OneToOneField(User, related_name = "Customer")
+	first_name = models.CharField(max_length=100, blank=True)
+	last_name = models.CharField(max_length=100, blank=True)
+	email = models.CharField(max_length=100, blank=True)
 	phone = models.CharField(max_length=10, blank = True)
 	street = models.CharField(max_length=50, blank=True)
 	city = models.CharField(max_length=40, blank=True)
@@ -14,13 +16,16 @@ class Customer(models.Model):
 	zip_code = models.CharField(max_length=5, blank = True)
 	
 	def __unicode__(self):
-		return self.user.first_name
+		return self.first_name
 
 class Employee(models.Model):
-	user = models.OneToOneField(User, related_name = "Employee")
-
+	first_name = models.CharField(max_length=100, blank=True)
+	last_name = models.CharField(max_length=100, blank=True)
+	email = models.CharField(max_length=100, blank=True)
+	phone = models.CharField(max_length=10, blank = True)
+	
 	def __unicode__(self):
-		return self.user.first_name
+		return self.first_name
 
 class Appointment(models.Model):
 	customer = models.ForeignKey(Customer)

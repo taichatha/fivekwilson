@@ -9,5 +9,6 @@ urlpatterns = patterns(
     '',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.index, name='index'),
+    url(r'^create_customer/$', views.create_customer, name='create_customer'),
 )
 
