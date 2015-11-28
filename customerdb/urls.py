@@ -11,6 +11,8 @@ urlpatterns = patterns(
     url(r'^$', views.index, name='index'),
     url(r'^create_customer/$', views.create_customer, name='create_customer'),
     url(r'^show_customers/$', views.show_customers, name='show_customers'),
-    url(r'^profile/(?P<customer_id>[0-9]+)/$', views.customer_profile, name='customer_profile'),
+    url(r'^(?P<customer_id>[0-9]+)/$', views.customer_profile, name='customer_profile'),
+    url(r'^(?P<customer_id>[0-9]+)/add_car/$', views.add_car, name='add_car'),
+    url(r'^(?P<customer_id>[0-9]+)/(?P<car_id>[0-9]+)/delete', views.delete_car, name="delete_car"),
 )
 

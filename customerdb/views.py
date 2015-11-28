@@ -4,11 +4,11 @@ from django.shortcuts import get_object_or_404, render
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
-from customerdb.forms import UserForm, CustomerForm, EmployeeForm, AppointmentForm
+from customerdb.forms import UserForm, CustomerForm, EmployeeForm, AppointmentForm, CarForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
-from customerdb.models import Customer, Employee, Appointment
+from customerdb.models import Customer, Employee, Appointment, Car
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -30,6 +30,31 @@ def customer_profile(request, customer_id):
 	customer = get_object_or_404(Customer, pk=customer_id)
 
 	return render(request, 'customerdb/customer_profile.html', {'customer': customer})
+
+
+def add_car(request, customer_id):
+	context = RequestContext(request)
+	customer = get_object_or_404(Customer, pk=customer_id)
+	if request.method == 'POST':
+		car_form = CarForm(data=request.POST)
+
+		if car_form.is_valid():
+			car = car_form.save(commit=False)
+			car.customer = customer 
+			car.save()
+			return HttpResponseRedirect('/customerdb/'+ customer_id+"/")
+		
+	else:
+		car_form = CarForm()
+
+	return render(request, 'customerdb/add_car.html', {'car_form': car_form, 'customer': customer})
+
+def delete_car(request, car_id, customer_id):
+	car = get_object_or_404(Car, pk=car_id)
+	car.delete()
+
+	return HttpResponseRedirect('/customerdb/'+ customer_id+"/")
+
 
 def create_customer(request):
 	#must be employee, must be admin

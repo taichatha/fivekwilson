@@ -1,4 +1,4 @@
-from customerdb.models import Customer, Employee, Appointment
+from customerdb.models import Customer, Employee, Appointment, Car
 from django.contrib.auth.models import User
 from django import forms
 from django.forms import ModelChoiceField
@@ -13,6 +13,12 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password')
+
+class CarForm(forms.ModelForm):
+    class Meta:
+        model = Car 
+        fields = ('make', 'model', 'year', 'plate', 'vin')
+
 
 class CustomerForm(forms.ModelForm):
     class Meta:

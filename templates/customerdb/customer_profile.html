@@ -5,7 +5,16 @@
 {% block content %}
 	{% if customer %}
 		<h1>{{customer.first_name}} {{customer.last_name}} </h1> 
+		<h1>Cars</h1>
+			<span><a href="{% url 'customerdb:add_car' customer.id %}">Add Car</a></span>
+			<ul>
+			{% for car in customer.car_set.all %}
+				<li>{{ car }} <a href="{% url 'customerdb:delete_car' customer.id car.id %}"><span>X</span></a></li>
+			{% endfor %}
+			</ul>
+
 		<h1>Work Orders</h1> 
+
 		<h1>Info</h1>
 
 	{% endif %}

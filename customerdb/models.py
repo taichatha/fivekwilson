@@ -27,7 +27,7 @@ class Car(models.Model):
 	customer = models.ForeignKey('Customer', default=False)
 
 	def __unicode__(self):
-		return (self.make + " " + self.model + " "+ self.model)
+		return (self.year + " " + self.model + " "+ self.make)
 
 
 class Employee(models.Model):
