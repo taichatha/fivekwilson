@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.db import models
+from django.shortcuts import get_object_or_404, render
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
@@ -16,27 +17,45 @@ from django.utils import timezone
 def index(request):
 	return render(request, 'customerdb/index.html')
 
+
+def show_customers(request):
+	#must be employee, must be admin, must be user
+	customers = Customer.objects.all()
+	return render(request, 'customerdb/show_customers.html', {'customers': customers})
+
+
+def customer_profile(request, customer_id):
+	#must be employee, must be admin
+	#must be customer_id
+	customer = get_object_or_404(Customer, pk=customer_id)
+
+	return render(request, 'customerdb/customer_profile.html', {'customer': customer})
+
 def create_customer(request):
+	#must be employee, must be admin
 	context = RequestContext(request)
 
 	if request.method == 'POST':
         # Attempt to grab information from the raw form information.
         # Note that we make use of both UserForm and UserProfileForm.
 	    customer_form = CustomerForm(data=request.POST)
+	    customers = Customer.objects.all()
 
 	    # If the two forms are valid...
 	    if customer_form.is_valid():
 	        customer = customer_form.save(commit=False)
+	        empty = 0
 	        
-	        # Now we save the UserProfile model instance.
-	        customer.save()
+	        for i in customers:
+	        	if i.first_name == customer.first_name and i.last_name == customer.last_name:
+	        		empty+=1
+	        		# print i.id 
 
-	        # Update our variable to tell the template registration was successful.
-	        
+	        if empty == 0:
+		        customer.save()
+		        return HttpResponseRedirect('/customerdb')
 
-	    # Invalid form or forms - mistakes or something else?
-	    # Print problems to the terminal.
-	    # They'll also be shown to the user.
+		    
 	    else:
 	    	print customer_form.errors
 

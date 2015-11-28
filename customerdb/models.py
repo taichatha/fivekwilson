@@ -18,6 +18,18 @@ class Customer(models.Model):
 	def __unicode__(self):
 		return self.first_name
 
+class Car(models.Model):
+	make = models.CharField(max_length=100, blank=True)
+	model = models.CharField(max_length=100, blank=True)
+	year = models.CharField(max_length=100, blank=True)
+	plate = models.CharField(max_length=100, blank=True)
+	vin = models.CharField(max_length=100, blank=True)
+	customer = models.ForeignKey('Customer', default=False)
+
+	def __unicode__(self):
+		return (self.make + " " + self.model + " "+ self.model)
+
+
 class Employee(models.Model):
 	first_name = models.CharField(max_length=100, blank=True)
 	last_name = models.CharField(max_length=100, blank=True)
@@ -26,6 +38,11 @@ class Employee(models.Model):
 	
 	def __unicode__(self):
 		return self.first_name
+
+class Work(models.Model):
+	type_of_work = models.CharField(max_length=100, blank=True)
+	cost = models.CharField(max_length=100, blank=True)
+
 
 class Appointment(models.Model):
 	customer = models.ForeignKey(Customer)

@@ -1,0 +1,12 @@
+
+{% extends "base.html" %}
+{% block title %}{{customer.first_name}} {{customer.last_name}} {% endblock %}
+
+{% block content %}
+	{% if customer %}
+		<h1>{{customer.first_name}} {{customer.last_name}} </h1> 
+		<h1>Work Orders</h1> 
+		<h1>Info</h1>
+
+	{% endif %}
+{% endblock %}
