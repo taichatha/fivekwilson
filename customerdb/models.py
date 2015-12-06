@@ -37,14 +37,18 @@ class Employee(models.Model):
 	phone = models.CharField(max_length=10, blank = True)
 	
 	def __unicode__(self):
-		return self.first_name
-
-class Work(models.Model):
-	type_of_work = models.CharField(max_length=100, blank=True)
-	cost = models.CharField(max_length=100, blank=True)
-
+		return (self.first_name + "<>")
 
 class Appointment(models.Model):
 	customer = models.ForeignKey(Customer)
 	employee = models.ForeignKey(Employee)
-	date = models.DateTimeField('Date of Appointment', blank=True)
+	car = models.ForeignKey(Car, blank=True)
+	date = models.DateTimeField(auto_now_add=True, blank=True)
+
+
+class Work(models.Model):
+	type_of_work = models.CharField(max_length=100, blank=True)
+	cost = models.CharField(max_length=100, blank=True)
+	appointment = models.ForeignKey(Appointment, blank=True)
+
+	

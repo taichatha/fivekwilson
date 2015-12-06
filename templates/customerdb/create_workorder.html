@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}{{customer.first_name}} {{customer.last_name}} {% endblock %}
+
+{% block content %}
+
+	<h1>Create Work Order for {{customer.first_name}}</h1> 
+
+
+	 <span><a href="{% url 'customerdb:add_car' customer.id %}?next={{request.path}}">Add Car</a></span>
+	<form id="appointment_user_form" method="post" action=""
+	        enctype="multipart/form-data">
+	        {% csrf_token %}
+	        <select name="car_id">
+	        	{% for car in customer.car_set.all %}
+	        		<option value="{{ car.id }}">{{car}}</option>
+	        	{% endfor %}
+
+	        </select>
+
+	        <br />
+	        <h1>Add Work</h1>
+	        <div id="all_work">
+	        	<input type="hidden" name="number" id="number" value=0></input>
+	        	<input type="text" name="work0"></input>
+	        	<input type="text" name="cost0"></input>
+	        	<a href="#" onClick="addWork()">Add work</a>
+	        	<br/>
+	        	
+	    	</div>
+	    	<br/>
+	    <!-- Provide a button to click to submit the form. -->
+	    <input type="submit" name="submit" value="Create" />
+	</form>
+
+	<script type='text/javascript'>
+	var number = Number(document.getElementById('number').value);
+	function addWork(){
+
+		var form = document.getElementById('all_work');
+		number += 1;
+		document.getElementById('number').value = number;
+		var input_work = document.createElement('input');
+		input_work.type="text";
+		input_work.name="work" + (number);
+		var input_cost = document.createElement('input');
+		input_cost.type="text";
+		input_cost.name="cost" + (number);
+		
+		form.appendChild(input_work);
+		form.appendChild(input_cost);
+		form.appendChild(document.createElement("br"));
+	}
+	</script>
+
+{% endblock %} 

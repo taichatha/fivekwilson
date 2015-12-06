@@ -1,4 +1,4 @@
-from customerdb.models import Customer, Employee, Appointment, Car
+from customerdb.models import Customer, Employee, Appointment, Car, Work
 from django.contrib.auth.models import User
 from django import forms
 from django.forms import ModelChoiceField
@@ -30,7 +30,15 @@ class EmployeeForm(forms.ModelForm):
         model = Employee
         fields = ('first_name','last_name')
 
-class AppointmentForm(forms.Form):
+class WorkForm(forms.ModelForm):
     class Meta:
-        model = Appointment
-        fields = ('customer', 'employee', 'date')
+        model= Work
+        fields = ('type_of_work', 'cost')
+
+class AppointmentUserForm(forms.Form):
+    car = forms.Select()
+    work = forms.Select()
+    
+    # class Meta:
+    #     model = Appointment
+    #     fields = ('car', 'work')
