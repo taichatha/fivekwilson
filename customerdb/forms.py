@@ -38,7 +38,8 @@ class WorkForm(forms.ModelForm):
 class AppointmentUserForm(forms.Form):
     car = forms.Select()
     work = forms.Select()
-    
+
+
     # class Meta:
     #     model = Appointment
     #     fields = ('car', 'work')

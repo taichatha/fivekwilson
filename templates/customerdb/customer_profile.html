@@ -14,7 +14,7 @@
 			</ul>
 
 		<h1>Work Orders</h1> 
-			<span><a href="{% url 'customerdb:add_workorder' customer.id %}?next={{request.path}}">Add Work Order</a></span>
+			<span><a href="{% url 'customerdb:add_customer_workorder' customer.id %}?next={{request.path}}">Add Work Order</a></span>
 			<ul>
 			{% for appt in customer.appointment_set.all %}
 				<li>{{ appt.date }} 

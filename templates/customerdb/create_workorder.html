@@ -1,23 +1,59 @@
 {% extends "base.html" %}
-{% block title %}{{customer.first_name}} {{customer.last_name}} {% endblock %}
+{% block title %}{# {{customer.first_name}} {{customer.last_name}}  #}{% endblock %}
 
 {% block content %}
 
-	<h1>Create Work Order for {{customer.first_name}}</h1> 
+	<h1>Create New Work Order</h1> 
 
 
-	 <span><a href="{% url 'customerdb:add_car' customer.id %}?next={{request.path}}">Add Car</a></span>
-	<form id="appointment_user_form" method="post" action=""
+	 {# <span><a href="{% url 'customerdb:add_car' customer.id %}?next={{request.path}}">Add Car</a></span> #}
+	<form id="appointment_form" method="post" action=""
 	        enctype="multipart/form-data">
 	        {% csrf_token %}
-	        <select name="car_id">
-	        	{% for car in customer.car_set.all %}
-	        		<option value="{{ car.id }}">{{car}}</option>
+	        <select id="customer_id" onchange="hideNewCustomer()">
+	        		<option value = "0">Select a Customer</option>
+	        	{% for customer in customers %}
+	        		<option value="{{ customer.id }}">{{customer}}</option>
 	        	{% endfor %}
 
 	        </select>
+	        or
+	        <div style="display: block" id="add_customer">
+		        <h2>Add a new Customer</h2>
+		        <input type="text" name="new_customer_fn" placeholder="First Name"></input>
+		        <input type="text" name="new_customer_ln" placeholder="Last Name"></input>
+		        <input type="text" name="new_customer_#" placeholder="Phone Number"></input>
+		        <br />
+		        {# Optional for Customer #}
+		        <input type="text" name="new_customer_straddr" placeholder="Street Address"></input>
+		        <input type="text" name="new_customer_apt" placeholder="Apt #"></input>
+		        <br />
+		        <input type="text" name="new_customer_city" placeholder="City"></input>
+		        <input type="text" name="new_customer_state" placeholder="State"></input>
+		        <br />
+	    	</div>
+	    	<div style="display:hidden" id="select_customer">
+	    		<input type="hidden" id="selected_customer" value="0">
+	    		
 
-	        <br />
+	    	</div>
+
+	    	<div style="display: block" id="add_car">
+		        <h2>Add Car</h2>
+		        {# If a previous cusotmer, then use javascript to change this to a dropdown based on customer id. Most likely, if a customer is selected, best route might be to just go to the customer link. #}
+		        <input type="text" name="new_car_make" placeholder="Make"></input>
+		        <input type="text" name="new_car_model" placeholder="Model"></input>
+		        <input type="text" name="new_car_year" placeholder="Year"></input>
+		        <br />
+		        {# Optional for Car#}
+		        <input type="text" name="new_car_plate" placeholder="Plate"></input>
+		        <input type="text" name="new_car_vin" placeholder="Vin"></input>
+		        <br />
+		    </div>
+		    <div id="select_car" style="display:none">
+		    	<h2>Select a car</h2>
+		    </div>
+
 	        <h1>Add Work</h1>
 	        <div id="all_work">
 	        	<input type="hidden" name="number" id="number" value=0></input>
@@ -34,6 +70,32 @@
 
 	<script type='text/javascript'>
 	var number = Number(document.getElementById('number').value);
+
+	function hideNewCustomer(){
+		//Need to listen for click?
+		var selectBox= document.getElementById("customer_id");
+		var selectedValue= selectBox.options[selectBox.selectedIndex].value;
+		document.getElementById("selected_customer").value=selectedValue
+		var add_customer_block = document.getElementById("add_customer");
+		var add_car_block = document.getElementById("add_car");
+		var select_car = document.getElementById("select_car");
+		if(selectedValue==0){
+			add_customer_block.style.display="block";
+			add_car_block.style.display="block";
+			// clear fields
+
+		}
+		else{
+			add_customer_block.style.display="none";
+			add_car_block.style.display="none";
+			// show cars for customer
+			
+			
+		}
+		console.log(selectedValue);
+
+	}
+
 	function addWork(){
 
 		var form = document.getElementById('all_work');

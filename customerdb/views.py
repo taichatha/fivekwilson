@@ -31,7 +31,13 @@ def customer_profile(request, customer_id):
 
 	return render(request, 'customerdb/customer_profile.html', {'customer': customer})
 
-def add_workorder(request, customer_id):
+def add_workorder(request):
+	customers = Customer.objects.all()
+
+	return render(request, 'customerdb/create_workorder.html', {'customers': customers})
+
+
+def add_customer_workorder(request, customer_id):
 	customer = get_object_or_404(Customer, pk=customer_id)
 	employee = get_object_or_404(Employee, pk= 1)
 	appointment_user_form = request.POST
@@ -58,7 +64,7 @@ def add_workorder(request, customer_id):
 		appointment_user_form = AppointmentUserForm()
 
 
-	return render(request, 'customerdb/create_workorder.html', {'appointment_user_form': appointment_user_form, 'customer': customer, 'number':number})
+	return render(request, 'customerdb/create_customer_workorder.html', {'appointment_user_form': appointment_user_form, 'customer': customer, 'number':number})
 
 def delete_workorder(request, appointment_id, customer_id):
 	appt = get_object_or_404(Appointment, pk=appointment_id)
